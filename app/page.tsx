@@ -47,7 +47,7 @@ export default function Home() {
     }
 
     const recalcData = async () => {
-      let response= await fetch("http://localhost:3000/api/get_pp"+
+      let response= await fetch("https://osutest-pink.vercel.app/api/get_pp"+
       "?bID="+bID+
       "&misscount="+misscount+
       "&accuracy="+accuracy+

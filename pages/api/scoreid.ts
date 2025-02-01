@@ -1,3 +1,4 @@
+/*
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { tools, v2, auth } from 'osu-api-extended'
 import { Client } from 'osu-web.js'
@@ -45,3 +46,4 @@ export default async function handler(
     beatmap: score.beatmap
   })
 }
+  */

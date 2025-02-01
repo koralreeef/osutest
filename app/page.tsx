@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
-import './input.css';
+import './globals.css';
 
 export default function Home() {
     const [bID, setTitle] = useState('')

@@ -20,7 +20,7 @@ export default async function handler(
   res: NextApiResponse<ResponseData>
 ) {;
 	
-  const bytes = fs.readFileSync("./maps/"+req.query.bID+".osu");
+  const bytes = fs.readFileSync("./public/maps/"+req.query.bID+".osu");
   const map = new rosu.Beatmap(bytes);
   const ok = Number(req.query.ok); 
   let great = Number(req.query.great); 

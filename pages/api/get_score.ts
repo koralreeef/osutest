@@ -70,15 +70,16 @@ export default async function handler(
       mode: 'osu'
     }
   });
+  if (!fs.existsSync("./public/maps")) fs.mkdirSync("./public/maps"); //make downloads directory if none
   //console.log(score)
   const result2 = await tools.download_beatmaps({
     type: 'difficulty',
     host: 'osu',
     id: score.score.beatmap.id,
-    file_path: "./maps/"+score.score.beatmap.id+".osu"
+    file_path: "./public/maps/"+score.score.beatmap.id+".osu"
   });
 
-  const bytes = fs.readFileSync("./maps/"+score.score.beatmap.id+".osu");
+  const bytes = fs.readFileSync("./public/maps/"+score.score.beatmap.id+".osu");
   const map = new rosu.Beatmap(bytes);
   const maxAttrs = new rosu.Performance({ mods: score.score.mods, lazer: false }).calculate(map);
 

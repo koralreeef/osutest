@@ -25,6 +25,7 @@ export default function Home() {
     const submitData = async () => {
         let response= await fetch("https://osutest-pink.vercel.app/api/get_score?bID="+bID+"&uID="+uID);
         //let response = await fetch("http://localhost:3000/api/get_score?bID=2496318&uID=754792");
+        //let response = await fetch("http://localhost:3000/api/get_score?bID="+bID+"&uID="+uID);
         
         response = await response.json();
         let responseArray: any[] = [];
@@ -48,15 +49,27 @@ export default function Home() {
 
     const recalcData = async () => {
       let response= await fetch("https://osutest-pink.vercel.app/api/get_pp"+
-      "?bID="+bID+
-      "&misscount="+misscount+
-      "&accuracy="+accuracy+
-      "&mods="+mods+
-      "&great="+great+
-      "&ok="+oK+
-      "&meh="+meh+
-      "&total="+total+
-      "&maxcombo="+maxCombo);
+        "?bID="+bID+
+        "&misscount="+misscount+
+        "&accuracy="+accuracy+
+        "&mods="+mods+
+        "&great="+great+
+        "&ok="+oK+
+        "&meh="+meh+
+        "&total="+total+
+        "&maxcombo="+maxCombo);
+      /*
+      let response= await fetch("http://localhost:3000/api/get_pp"+
+        "?bID="+bID+
+        "&misscount="+misscount+
+        "&accuracy="+accuracy+
+        "&mods="+mods+
+        "&great="+great+
+        "&ok="+oK+
+        "&meh="+meh+
+        "&total="+total+
+        "&maxcombo="+maxCombo);
+      */
       response = await response.json();
       let responseArray: any[] = [];
       Object.values(response).map(x => {responseArray.push(x)})
@@ -65,7 +78,6 @@ export default function Home() {
       setMisscount(Number(responseArray[1]));
       console.log(response);
     }
-      //let response = await fetch("http://localhost:3000/api/get_score?bID=2496318&uID=754792");
     return (
       <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
         <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">

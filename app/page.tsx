@@ -1,8 +1,11 @@
+'use client'
+
 import Image from "next/image";
 import LikeButton from './calculate';
 import axios from 'axios';
 import Script from "next/script";
 import rosu from "rosu-pp-js";
+import { useState } from "react";
 
 export default function Home() {
   const [title, setTitle] = useState('')

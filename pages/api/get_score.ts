@@ -9,21 +9,30 @@ type ResponseData = {
   maxPP: number
   actualPP: number
   mods: string[]
+  hits: {
+    ok: number
+    great: number,
+    meh: number,
+    miss: number,
+  }
+  totalHits: number,
+  accuracy: number,
+  maxcombo: number
 }
 
-type Score = {
+export type Score = {
   beatmap: string
   maxPP: number
   actualPP: number
-  mods: string[]
+  mods: any[]
   hits: {
     ok: number
-    great: number
-    meh: number
-    miss: number
+    great: number,
+    meh: number,
+    miss: number,
   }
-  totalHits: number
-  accuracy: number
+  totalHits: number,
+  accuracy: number,
   maxcombo: number
 }
 
@@ -61,7 +70,7 @@ export default async function handler(
       mode: 'osu'
     }
   });
-  console.log(score)
+  //console.log(score)
   const result2 = await tools.download_beatmaps({
     type: 'difficulty',
     host: 'osu',
@@ -97,16 +106,16 @@ export default async function handler(
   map.free();
   console.log(score.score.mods)
   const beatmapData = beatmap.beatmapset.artist + " - " +beatmap.beatmapset.title + " [" +beatmap.version + "]"  
-  const scoredump: Score = {
-    beatmap: beatmapData,
-    maxPP: Number((maxAttrs.pp).toFixed(2)),
-    actualPP: Number((currAttrs.pp).toFixed(2)),
-    mods: score.score.mods ?? ["CL"],
-    hits: hits,
-    totalHits: total,
-    accuracy: sc.accuracy,
-    maxcombo: score.score.max_combo,
-  }
+  const scoredump: Score = { 
+      beatmap: beatmapData,
+      maxPP: Number((maxAttrs.pp).toFixed(2)),
+      actualPP: Number((currAttrs.pp).toFixed(2)),
+      mods: score.score.mods ?? ["CL"],
+      hits: hits,
+      totalHits: total,
+      accuracy: sc.accuracy,
+      maxcombo: score.score.max_combo
+    }
   res.status(200).json({ 
     beatmap: scoredump.beatmap,
     maxPP: scoredump.maxPP,

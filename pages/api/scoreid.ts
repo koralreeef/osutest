@@ -5,7 +5,8 @@ import rosu from 'rosu-pp-js'
 import fs from 'fs'
 
 type ResponseData = {
-  scoreID: number
+  actualPP: number
+  beatmap: string
 }
 
 export type Score = {

@@ -4,15 +4,9 @@ import rosu from 'rosu-pp-js'
 import fs from 'fs'
 
 type ResponseData = {
-  bID: number
+  actualPP: number
   misscount: number
   accuracy: number
-  mods?: string
-  great: number
-  ok: number
-  meh: number
-  total: number
-  maxcombo: number
 }
 
 type Stats = {
@@ -39,8 +33,8 @@ export default async function handler(
     meh: meh?? 0,
     miss: misscount ?? 0,
   }
-  
-  let modString = (req.query.mods).replace(",", "");
+  const mods: any = req.query.mods;
+  let modString = (mods).replace(",", "");
   let scrub = true;
   while(scrub){
     modString = modString.replace(",", "");
@@ -50,7 +44,7 @@ export default async function handler(
     }
   }
   console.log(modString)
-  let total = Number(req.query.total);
+  let total: any = Number(req.query.total);
   const newTotal = hits.ok + hits.great + hits.meh + hits.miss;
   const subtract = Math.abs(newTotal - total);
   if(newTotal > total){
@@ -67,10 +61,11 @@ export default async function handler(
     accuracy: sc.accuracy,
     combo: maxcombo,
 }).calculate(maxAttrs); 
+  const finalPP: any = Number((currAttrs.pp).toFixed(2))
   map.free();
   
   const score: Stats = { 
-      actualPP: Number((currAttrs.pp).toFixed(2)),
+      actualPP: finalPP,
       misscount: misscount,
       accuracy: Number(sc.accuracy.toFixed(2))
     }

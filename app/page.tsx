@@ -10,13 +10,6 @@ import { useState } from "react";
 export default function Home() {
   const [title, setTitle] = useState('')
   const [body, setBody] = useState('')
-  const balls = async(bID: number, uID: number) => {
-    let response = await fetch("http://localhost:3000/api/get_score?bID="+bID+"&uID="+uID);
-    response = await response.json();
-  }
-  const data = balls(2496318, 754792);
-  console.log(JSON.stringify(data))
-  
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
@@ -30,7 +23,6 @@ export default function Home() {
                 value={body}
                 onChange={(e) => setBody(e.target.value)}
                 placeholder="Enter Post Body" />
-            <button onClick={balls}>Submit</button>
       </main>
       <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
         <a

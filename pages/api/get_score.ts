@@ -11,19 +11,19 @@ type ResponseData = {
   mods: string[]
 }
 
-export type Score = {
+type Score = {
   beatmap: string
   maxPP: number
   actualPP: number
   mods: string[]
   hits: {
     ok: number
-    great: number,
-    meh: number,
-    miss: number,
+    great: number
+    meh: number
+    miss: number
   }
-  totalHits: number,
-  accuracy: number,
+  totalHits: number
+  accuracy: number
   maxcombo: number
 }
 
@@ -79,7 +79,7 @@ export default async function handler(
     meh: score.score.statistics.count_50 ?? 0,
     miss: score.score.statistics.count_miss ?? 0,
   }
-  const total = score.score.statistics.count_100 
+  const total: any = score.score.statistics.count_100 
   + score.score.statistics.count_300
   + score.score.statistics.count_50 
   + score.score.statistics.count_miss;
@@ -97,22 +97,23 @@ export default async function handler(
   map.free();
   console.log(score.score.mods)
   const beatmapData = beatmap.beatmapset.artist + " - " +beatmap.beatmapset.title + " [" +beatmap.version + "]"  
-  const scoredump: Score = { 
-      beatmap: beatmapData,
-      maxPP: Number((maxAttrs.pp).toFixed(2)),
-      actualPP: Number((currAttrs.pp).toFixed(2)),
-      mods: score.score.mods ?? ["CL"],
-      hits: hits,
-      totalHits: total,
-      maxcombo: score.score.max_combo
-    }
+  const scoredump: Score = {
+    beatmap: beatmapData,
+    maxPP: Number((maxAttrs.pp).toFixed(2)),
+    actualPP: Number((currAttrs.pp).toFixed(2)),
+    mods: score.score.mods ?? ["CL"],
+    hits: hits,
+    totalHits: total,
+    accuracy: sc.accuracy,
+    maxcombo: score.score.max_combo,
+  }
   res.status(200).json({ 
     beatmap: scoredump.beatmap,
     maxPP: scoredump.maxPP,
     actualPP: scoredump.actualPP,
     mods: scoredump.mods,
     hits: scoredump.hits,
-    totalHits: scoredump.total,
+    totalHits: scoredump.totalHits,
     maxcombo: scoredump.maxcombo,
     accuracy: Number(sc.accuracy.toFixed(2))
   })

@@ -9,7 +9,7 @@ type ResponseData = {
 }
 
 export type Score = {
-  actualPP: number,
+  actualPP: number
   beatmap: string
 }
 
@@ -32,9 +32,9 @@ export default async function handler(
   const result = await v2.scores.details({
     id: scoreID,
   });
-
+  const actualPP: number = Number((result.pp).toFixed(2));
   const score: Score = { 
-    actualPP: Number((result.pp).toFixed(2)),
+    actualPP: actualPP,
     beatmap: result.beatmapset.title
   }
   console.log(result);

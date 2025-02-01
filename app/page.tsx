@@ -23,7 +23,7 @@ export default function Home() {
     const [meh, setMeh] = useState(0);
 
     const submitData = async () => {
-        let response= await fetch("http://localhost:3000/api/get_score?bID="+bID+"&uID="+uID);
+        let response= await fetch("https://osutest-pink.vercel.app/api/get_score?bID="+bID+"&uID="+uID);
         //let response = await fetch("http://localhost:3000/api/get_score?bID=2496318&uID=754792");
         
         response = await response.json();

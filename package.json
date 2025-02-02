@@ -18,6 +18,7 @@
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@mui/material": "^6.4.2",
+    "@vercel/blob": "^0.27.1",
     "axios": "^1.7.9",
     "child_process": "^1.0.2",
     "fs": "^0.0.1-security",

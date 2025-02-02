@@ -78,7 +78,7 @@ export default async function handler(
     id: score.score.beatmap.id,
     file_path: "./public/maps/"+score.score.beatmap.id+".osu"
   });
-
+  console.log(result2);
   const bytes = fs.readFileSync("./public/maps/"+score.score.beatmap.id+".osu");
   const map = new rosu.Beatmap(bytes);
   const maxAttrs = new rosu.Performance({ mods: score.score.mods, lazer: false }).calculate(map);

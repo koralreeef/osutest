@@ -28,6 +28,7 @@ export default async function handler(
     client_id: clientIDv2,
     client_secret: clientSecret,
     cachedTokenPath: './test.json', // path to the file your auth token will be saved (to prevent osu!api spam)
+    scopes: ['public']
   });
 
   const result = await v2.scores.details({

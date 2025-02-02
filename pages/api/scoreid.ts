@@ -1,4 +1,3 @@
-/*
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { tools, v2, auth } from 'osu-api-extended'
 import { Client } from 'osu-web.js'
@@ -29,7 +28,6 @@ export default async function handler(
     client_id: clientIDv2,
     client_secret: clientSecret,
     cachedTokenPath: './test.json', // path to the file your auth token will be saved (to prevent osu!api spam)
-    scopes: undefined
   });
 
   const result = await v2.scores.details({
@@ -46,4 +44,3 @@ export default async function handler(
     beatmap: score.beatmap
   })
 }
-  */

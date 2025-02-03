@@ -27,7 +27,7 @@ export default function Home() {
   const [oK, setOk] = useState(0);
   const [great, setGreat] = useState(0);
   const [meh, setMeh] = useState(0);
-  const link = process.env.NEXT_PUBLIC_LINK;
+  const link = "https://osucalc-891757656779.us-east1.run.app";
   const linkdev = process.env.NEXT_PUBLIC_DEV;
   const submitData = async () => {
     let response = await fetch(link+"/api/get_score_with_id?scoreID=");
@@ -142,7 +142,7 @@ export default function Home() {
             width={32}
             height={32}
           />
-          source
+          source (private) (for now)
         </a>
       </footer>
     </div>

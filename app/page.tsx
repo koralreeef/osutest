@@ -24,35 +24,13 @@ export default function Home() {
     const [meh, setMeh] = useState(0);
 
     const submitData = async () => {
-        //let response= await fetch("https://osutest-pink.vercel.app/api/get_score?bID="+bID+"&uID="+uID);
-        //let response = await fetch("http://localhost:3000/api/get_score?bID=2496318&uID=754792");
-        let response = await fetch("https://osucalc-891757656779.us-east1.run.app/api/get_score?bID="+bID+"&uID="+uID);
-        
-        response = await response.json();
-        let responseArray: any[] = [];
-        Object.values(response).map(x => {responseArray.push(x)});
-        console.log(responseArray);  
-
-        setBeatmap(responseArray[0]);
-        setMisscount(Number(responseArray[4].miss));
-        setMaxMisscount(Number(responseArray[4].miss) * 12);
-        setActualPP(responseArray[2]);
-        setMods(responseArray[3] ?? "none");
-        setAccuracy(responseArray[7]);
-        setMaxPP(responseArray[1]);
-        setMaxCombo(responseArray[6]);
-        setTotal(responseArray[4].great + responseArray[4].meh + responseArray[4].ok + responseArray[4].miss);
-        setOk(responseArray[4].ok);
-        setGreat(responseArray[4].great);
-        setMeh(responseArray[4].meh);
-        setRevealText(true);
     }
 
     const submitData2 = async () => {
       //let response= await fetch("https://osutest-pink.vercel.app/api/get_score?bID="+bID+"&uID="+uID);
       //let response = await fetch("http://localhost:3000/api/get_score?bID=2496318&uID=754792");
-      //let response = await fetch("https://osucalc-891757656779.us-east1.run.app/api/get_score_with_id?scoreID"+scoreID);
-      let response = await fetch("http://localhost:3000/api/get_score_with_id?scoreID="+scoreID);
+      let response = await fetch("https://osucalc-891757656779.us-east1.run.app/api/get_score_with_id?scoreID"+scoreID);
+      //let response = await fetch("http://localhost:3000/api/get_score_with_id?scoreID="+scoreID);
       
       response = await response.json();
       let responseArray: any[] = [];
@@ -76,6 +54,7 @@ export default function Home() {
   }
 
     const recalcData = async () => {
+      /*
       let response= await fetch("http://localhost:3000/api/get_pp"+
         "?bID="+bID+
         "&misscount="+misscount+
@@ -86,7 +65,7 @@ export default function Home() {
         "&meh="+meh+
         "&total="+total+
         "&maxcombo="+maxCombo);
-      /*
+      */
       let response= await fetch("https://osucalc-891757656779.us-east1.run.app/api/get_pp"+
         "?bID="+bID+
         "&misscount="+misscount+
@@ -97,7 +76,6 @@ export default function Home() {
         "&meh="+meh+
         "&total="+total+
         "&maxcombo="+maxCombo);
-      */
       response = await response.json();
       let responseArray: any[] = [];
       Object.values(response).map(x => {responseArray.push(x)})
@@ -110,7 +88,7 @@ export default function Home() {
     return (
       <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
         <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-            <h2>helloo</h2>
+            <h1>hey man</h1>
             <input type="text"
                 value={scoreID}
                 onChange={(e) => setScoreID(e.target.value)}

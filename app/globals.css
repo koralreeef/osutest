@@ -27,3 +27,7 @@ input, select, textarea{
 textarea:focus, input:focus {
   color: black;
 }
+
+.button-row {
+  flex-direction: row;
+ }

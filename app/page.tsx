@@ -8,6 +8,7 @@ import './globals.css';
 export default function Home() {
     const [bID, setTitle] = useState('')
     const [uID, setBody] = useState('')
+    const [scoreID, setScoreID] = useState('')
     const [misscount, setMisscount] = useState(0);
     const [maxmisscount, setMaxMisscount] = useState(0);
     const [beatmap, setBeatmap] = useState("");
@@ -47,9 +48,35 @@ export default function Home() {
         setRevealText(true);
     }
 
+    const submitData2 = async () => {
+      //let response= await fetch("https://osutest-pink.vercel.app/api/get_score?bID="+bID+"&uID="+uID);
+      //let response = await fetch("http://localhost:3000/api/get_score?bID=2496318&uID=754792");
+      //let response = await fetch("https://osucalc-891757656779.us-east1.run.app/api/get_score_with_id?scoreID"+scoreID);
+      let response = await fetch("http://localhost:3000/api/get_score_with_id?scoreID="+scoreID);
+      
+      response = await response.json();
+      let responseArray: any[] = [];
+      Object.values(response).map(x => {responseArray.push(x)});
+      console.log(responseArray);  
+
+      setBeatmap(responseArray[0]);
+      setMisscount(Number(responseArray[4].miss));
+      setMaxMisscount(Number(responseArray[4].miss) * 12);
+      setActualPP(responseArray[2]);
+      setMods(responseArray[3] ?? "none");
+      setAccuracy(responseArray[7]);
+      setMaxPP(responseArray[1]);
+      setMaxCombo(responseArray[6]);
+      setTotal(responseArray[4].great + responseArray[4].meh + responseArray[4].ok + responseArray[4].miss);
+      setOk(responseArray[4].ok);
+      setGreat(responseArray[4].great);
+      setMeh(responseArray[4].meh);
+      setTitle(responseArray[8]);
+      setRevealText(true);
+  }
+
     const recalcData = async () => {
-      /*
-      let response= await fetch("https://osutest-pink.vercel.app/api/get_pp"+
+      let response= await fetch("http://localhost:3000/api/get_pp"+
         "?bID="+bID+
         "&misscount="+misscount+
         "&accuracy="+accuracy+
@@ -59,8 +86,7 @@ export default function Home() {
         "&meh="+meh+
         "&total="+total+
         "&maxcombo="+maxCombo);
-        */
-      
+      /*
       let response= await fetch("https://osucalc-891757656779.us-east1.run.app/api/get_pp"+
         "?bID="+bID+
         "&misscount="+misscount+
@@ -71,7 +97,7 @@ export default function Home() {
         "&meh="+meh+
         "&total="+total+
         "&maxcombo="+maxCombo);
-      
+      */
       response = await response.json();
       let responseArray: any[] = [];
       Object.values(response).map(x => {responseArray.push(x)})
@@ -80,22 +106,19 @@ export default function Home() {
       setMisscount(Number(responseArray[1]));
       console.log(response);
     }
+    
     return (
       <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
         <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
             <h2>helloo</h2>
             <input type="text"
-                value={bID}
-                onChange={(e) => setTitle(e.target.value)}
-                placeholder="enter beatmap ID" />
-            <input type="text"
-                value={uID}
-                onChange={(e) => setBody(e.target.value)}
-                placeholder="enter user ID" />
-                
-            <button onClick={submitData}>Submit</button>{revealText ? <button onClick={recalcData}>recalc</button> : null}
+                value={scoreID}
+                onChange={(e) => setScoreID(e.target.value)}
+                placeholder="enter score ID" />
+
+            <button onClick={submitData2}>Submit</button>{revealText ? <button onClick={recalcData}>recalc</button> : null}
+
             {revealText ? <div>
-            
             <Box sx={{ width: 300 }}>
             <Slider value={misscount} onChange={(e: any) => setMisscount(e.target.value)} aria-label="secondary" valueLabelDisplay="auto" color="secondary" max={maxmisscount} />
             </Box>

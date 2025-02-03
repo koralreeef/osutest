@@ -15,10 +15,13 @@ type ResponseData = {
     meh: number,
     miss: number,
   }
-  totalHits: number,
-  accuracy: number,
-  maxcombo: number,
+  totalHits: number
+  accuracy: number
+  maxcombo: number
   beatmapID: number
+  maximumcombo: number
+  beatmapsetID: number
+  difficulty: string
 }
 
 export type Score = {
@@ -28,18 +31,21 @@ export type Score = {
   mods: string
   hits: {
     ok: number
-    great: number,
-    meh: number,
-    miss: number,
+    great: number
+    meh: number
+    miss: number
   }
-  totalHits: number,
-  accuracy: number,
-  maxcombo: number,
+  totalHits: number
+  accuracy: number
+  maxcombo: number
   beatmapID: number
+  maximumcombo: number
+  beatmapsetID: number
+  difficulty: string
 }
 
-const clientSecret = "Z77zfBSChTA1tJBxhWJErI8teMrXad6UqTOf1Wn0";
-const clientIDv2 = 36823;
+const clientSecret: any = process.env.NEXT_PUBLIC_CLIENT_SECRET;
+const clientIDv2: any = process.env.NEXT_PUBLIC_CLIENT_IDV2;
 
 export default async function handler(
   req: NextApiRequest,
@@ -73,11 +79,15 @@ export default async function handler(
     cachedTokenPath: './test.json', // path to the file your auth token will be saved (to prevent osu!api spam)
     scopes: ['public']
   });
-
+try{
   score = await v2.scores.details({
     id: scoreID,
   });
-
+} catch (err){
+    res.statusMessage = "invalid score ID!"
+    console.log(res.statusMessage);
+    return;
+}
   const beatmapID = score.beatmap_id;
   for(const mod of score.mods){
     modString = modString + mod.acronym;
@@ -120,7 +130,8 @@ export default async function handler(
   //console.log(maxAttrs);
   map.free();
   console.log(score.mods)
-  const beatmapData = beatmap.beatmapset.artist + " - " +beatmap.beatmapset.title + " [" +beatmap.version + "]"  
+  const beatmapData = beatmap.beatmapset.artist + " - " +beatmap.beatmapset.title
+  const beatmapDifficulty = beatmap.version 
   const scoredump: Score = { 
       beatmap: beatmapData,
       maxPP: Number((maxAttrs.pp).toFixed(2)),
@@ -130,7 +141,10 @@ export default async function handler(
       totalHits: total,
       accuracy: sc.accuracy,
       maxcombo: score.max_combo,
-      beatmapID: beatmapID
+      beatmapID: beatmapID,
+      maximumcombo: score.beatmap.max_combo,
+      beatmapsetID: score.beatmapset.id,
+      difficulty: beatmapDifficulty,
     }
   res.status(200).json({ 
     beatmap: scoredump.beatmap,
@@ -141,6 +155,9 @@ export default async function handler(
     totalHits: scoredump.totalHits,
     maxcombo: scoredump.maxcombo,
     accuracy: Number(sc.accuracy.toFixed(2)),
-    beatmapID: beatmapID
+    beatmapID: beatmapID,
+    maximumcombo: score.beatmap.max_combo,
+    beatmapsetID: score.beatmapset.id,
+    difficulty: beatmapDifficulty,
   })
 }

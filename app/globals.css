@@ -28,6 +28,17 @@ textarea:focus, input:focus {
   color: black;
 }
 
-.button-row {
-  flex-direction: row;
+button {
+  transition-duration: 0.6s;
+}
+
+button:hover {
+  background-color: #724164; 
+  color: white;
  }
+ 
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}

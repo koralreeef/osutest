@@ -14,8 +14,8 @@ export type Score = {
   beatmap: string
 }
 
-const clientSecret = "eOTFdoJccrQQcVaOOqdBlq4g7KPTr3p2fF8cGL0V";
-const clientIDv2 = 36823;
+const clientSecret: any = process.env.CLIENT_SECRET;
+const clientIDv2: any = process.env.CLIENT_IDV2;
 
 export default async function handler(
   req: NextApiRequest,

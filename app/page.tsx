@@ -28,7 +28,7 @@ export default function Home() {
   const [great, setGreat] = useState(0);
   const [meh, setMeh] = useState(0);
   const link = "https://osucalc-891757656779.us-east1.run.app";
-  const linkdev = process.env.NEXT_PUBLIC_DEV;
+  const linkdev = "http://localhost:3000";
   const submitData = async () => {
     let response = await fetch(link+"/api/get_score_with_id?scoreID=");
     response = await response.json();
@@ -39,7 +39,7 @@ export default function Home() {
     //let response= await fetch("https://osutest-pink.vercel.app/api/get_score?bID="+bID+"&uID="+uID);
     //let response = await fetch("http://localhost:3000/api/get_score?bID=2496318&uID=754792");
     //let response = await fetch("https://osucalc-891757656779.us-east1.run.app/api/get_score_with_id?scoreID="+scoreID);
-    let response = await fetch(link+"/api/get_score_with_id?scoreID=" + scoreID);
+    let response = await fetch(linkdev+"/api/get_score_with_id?scoreID=" + scoreID);
 
     response = await response.json();
     console.log(response);
@@ -80,7 +80,7 @@ export default function Home() {
       "&total="+total+
       "&maxcombo="+maxCombo);
     */
-    let response = await fetch(link+"/api/get_pp" +
+    let response = await fetch(linkdev+"/api/get_pp" +
       "?bID=" + bID +
       "&misscount=" + misscount +
       "&accuracy=" + accuracy +

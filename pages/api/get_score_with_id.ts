@@ -44,8 +44,11 @@ export type Score = {
   difficulty: string
 }
 
-const clientSecret: any = "eOTFdoJccrQQcVaOOqdBlq4g7KPTr3p2fF8cGL0V";
-const clientIDv2: any = 36823;
+const clientSecret: any = process.env.CLIENT_SECRET;
+const clientIDv2: any = process.env.CLIENT_IDV2;
+
+console.log(clientSecret);
+console.log(clientIDv2);
 
 export default async function handler(
   req: NextApiRequest,

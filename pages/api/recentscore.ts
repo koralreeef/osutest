@@ -3,6 +3,7 @@ import { tools, v2, auth } from 'osu-api-extended'
 import { Client } from 'osu-web.js'
 import rosu from 'rosu-pp-js'
 import fs from 'fs'
+const {CLIENT_SECRET, CLIENT_IDV2} = process.env;
 
 type ResponseData = {
   actualPP: number
@@ -14,8 +15,8 @@ export type Score = {
   beatmap: string
 }
 
-const clientSecret: any = process.env.CLIENT_SECRET;
-const clientIDv2: any = process.env.CLIENT_IDV2;
+const clientSecret: any = CLIENT_SECRET;
+const clientIDv2: any = CLIENT_IDV2;
 
 export default async function handler(
   req: NextApiRequest,

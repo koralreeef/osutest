@@ -3,6 +3,7 @@ import { auth, tools, v2 } from 'osu-api-extended'
 import { Client } from 'osu-web.js'
 import rosu from 'rosu-pp-js'
 import fs from 'fs'
+const {CLIENT_SECRET, CLIENT_IDV2} = process.env;
 
 type ResponseData = {
   beatmap: string
@@ -44,8 +45,8 @@ export type Score = {
   difficulty: string
 }
 
-const clientSecret: any = process.env.CLIENT_SECRET;
-const clientIDv2: any = process.env.CLIENT_IDV2;
+const clientSecret: any = CLIENT_SECRET;
+const clientIDv2: any = CLIENT_IDV2;
 
 console.log(clientSecret);
 console.log(clientIDv2);

@@ -30,16 +30,13 @@ export default function Home() {
   const link = "https://osucalc-891757656779.us-east1.run.app";
   const linkdev = "http://localhost:3000";
   const submitData = async () => {
-    let response = await fetch(link+"/api/get_score_with_id?scoreID=");
+    let response = await fetch(link+"/api/get_recent_score?scoreID=");
     response = await response.json();
     console.log(response);
   }
   
-  const submitData2 = async () => {
-    //let response= await fetch("https://osutest-pink.vercel.app/api/get_score?bID="+bID+"&uID="+uID);
-    //let response = await fetch("http://localhost:3000/api/get_score?bID=2496318&uID=754792");
-    //let response = await fetch("https://osucalc-891757656779.us-east1.run.app/api/get_score_with_id?scoreID="+scoreID);
-    let response = await fetch(linkdev+"/api/get_score_with_id?scoreID=" + scoreID);
+  const submitScore = async () => {
+    let response = await fetch(link+"/api/get_score_with_id?scoreID=" + scoreID);
 
     response = await response.json();
     console.log(response);
@@ -68,19 +65,7 @@ export default function Home() {
   }
 
   const recalcData = async () => {
-    /*
-    let response= await fetch("http://localhost:3000/api/get_pp"+
-      "?bID="+bID+
-      "&misscount="+misscount+
-      "&accuracy="+accuracy+
-      "&mods="+mods+
-      "&great="+great+
-      "&ok="+oK+
-      "&meh="+meh+
-      "&total="+total+
-      "&maxcombo="+maxCombo);
-    */
-    let response = await fetch(linkdev+"/api/get_pp" +
+    let response = await fetch(link+"/api/get_pp" +
       "?bID=" + bID +
       "&misscount=" + misscount +
       "&accuracy=" + accuracy +
@@ -102,24 +87,19 @@ export default function Home() {
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-4 pb-10 gap-8 sm:p-10 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-4 row-start-2 items-center">
-        <h1>hey man</h1>
+        <p>hey man this is a calculator for csr pp<br />some recent scores might not work sorry</p>
         <input type="text"
           value={scoreID}
           size={15}
           onChange={(e) => setScoreID(e.target.value)}
           placeholder="enter score ID" />
-        <input type="text"
-          value={uID}
-          size={15}
-          onChange={(e) => setBody(e.target.value)}
-          placeholder="enter user ID" />
         {!revealText ? <div className="flex flex-row gap-4">
-          <button onClick={submitData}>process recent score</button>
-          <button onClick={submitData2}>submit score</button> 
+
+          <button onClick={submitScore}>submit score</button> 
           </div>: null}
 
         {revealText ? <div className="flex flex-row gap-4">
-          <button onClick={submitData2}>submit another score</button>
+          <button onClick={submitScore}>submit another score</button>
           <button onClick={recalcData}>recalc</button>
         </div> : null}
 
@@ -150,7 +130,7 @@ export default function Home() {
             width={32}
             height={32}
           />
-          source (private) (for now)
+          source code
         </a>
       </footer>
     </div>

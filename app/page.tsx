@@ -108,7 +108,15 @@ export default function Home() {
           size={15}
           onChange={(e) => setScoreID(e.target.value)}
           placeholder="enter score ID" />
-        {!revealText ? <button onClick={submitData2}>submit score</button> : null}
+        <input type="text"
+          value={uID}
+          size={15}
+          onChange={(e) => setBody(e.target.value)}
+          placeholder="enter user ID" />
+        {!revealText ? <div className="flex flex-row gap-4">
+          <button onClick={submitData}>process recent score</button>
+          <button onClick={submitData2}>submit score</button> 
+          </div>: null}
 
         {revealText ? <div className="flex flex-row gap-4">
           <button onClick={submitData2}>submit another score</button>

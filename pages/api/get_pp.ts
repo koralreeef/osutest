@@ -22,7 +22,7 @@ export default async function handler(
 	
   const bytes = fs.readFileSync("./public/maps/"+req.query.bID+".osu");
   const map = new rosu.Beatmap(bytes);
-  const ok = Number(req.query.ok); 
+  let ok = Number(req.query.ok); 
   let great = Number(req.query.great); 
   const meh = Number(req.query.meh); 
   const misscount = Number(req.query.misscount); 
@@ -30,7 +30,7 @@ export default async function handler(
   const hits = {
     ok: ok ?? 0,
     great: great ?? 0,
-    meh: meh?? 0,
+    meh: meh ?? 0,
     miss: misscount ?? 0,
   }
   const mods: any = req.query.mods;
@@ -46,12 +46,15 @@ export default async function handler(
   console.log(modString)
   let total: any = Number(req.query.total);
   const newTotal = hits.ok + hits.great + hits.meh + hits.miss;
+
   const subtract = Math.abs(newTotal - total);
   if(newTotal > total){
     hits.great = hits.great - subtract;
   } else if(newTotal < total) {
     hits.great = hits.great + subtract;
   }
+  console.log(hits)
+  console.log(" total: "+total)
   const sc = tools.calculate_accuracy(hits, total, 'osu', false);
   const maxAttrs = new rosu.Performance({ mods: modString, lazer: false }).calculate(map);
   const currAttrs = new rosu.Performance({

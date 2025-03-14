@@ -42,3 +42,7 @@ img {
   height: auto;
   border-radius: 8px;
 }
+
+.preserve-white-space {
+  white-space: pre;
+}

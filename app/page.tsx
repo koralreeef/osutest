@@ -5,6 +5,7 @@ import Image from "next/image";
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 import './globals.css';
+import { radioClasses } from "@mui/material";
 
 export default function Home() {
   const [bID, setTitle] = useState('')
@@ -13,13 +14,20 @@ export default function Home() {
   const [beatmapsetID, setBeatmapSetID] = useState('')
   const [beatmaplink, setBeatmapLink] = useState('')
   const [misscount, setMisscount] = useState(0);
+  const [miss, setMiss] = useState(0);
   const [maxmisscount, setMaxMisscount] = useState(0);
+  const [hundred, setHundred] = useState(0);
+  const [maxhundred, setMaxHundred] = useState(0);
+  const [fifty, setFifty] = useState(0);
+  const [maxFifty, setMaxFifty] = useState(0);
   const [beatmap, setBeatmap] = useState("");
   const [difficulty, setDifficulty] = useState("");
   const [mods, setMods] = useState("");
   const [accuracy, setAccuracy] = useState("");
+  const [originalPP, setOriginalPP] = useState(0);
   const [actualPP, setActualPP] = useState("");
   const [maxPP, setMaxPP] = useState("");
+  const [remainderPP, setRemainderPP] = useState(0);
   const [total, setTotal] = useState("");
   const [maxCombo, setMaxCombo] = useState(0);
   const [maximumCombo, setMaximumCombo] = useState(0);
@@ -27,6 +35,7 @@ export default function Home() {
   const [oK, setOk] = useState(0);
   const [great, setGreat] = useState(0);
   const [meh, setMeh] = useState(0);
+  const [plus, setPlus] = useState("")
   const link = "https://osucalc-891757656779.us-east1.run.app";
   const linkdev = "http://localhost:3000";
   const submitData = async () => {
@@ -36,17 +45,28 @@ export default function Home() {
   }
   
   const submitScore = async () => {
-    let response = await fetch(link+"/api/get_score_with_id?scoreID=" + scoreID);
+    let response = await fetch(linkdev+"/api/get_score_with_id?scoreID=" + scoreID);
 
     response = await response.json();
     console.log(response);
     let responseArray: any[] = [];
     Object.values(response).map(x => { responseArray.push(x) });
     console.log(responseArray);
+    let meh = responseArray[4].meh;
+    let ok = responseArray[4].ok;
+    let misscount = responseArray[4].miss;
 
+    if(misscount == 0) misscount = 5
+    if(meh == 0) meh = 5
+    if(ok == 0) ok = 5
     setBeatmap(responseArray[0]);
     setMisscount(Number(responseArray[4].miss));
-    setMaxMisscount(Math.floor(responseArray[5] / 10));
+    setMaxMisscount(Math.floor(misscount * 10));
+    setMaxHundred(Math.floor(ok * 5));
+    setMaxFifty(Math.floor(meh * 5));
+    setHundred(responseArray[4].ok)
+    setFifty(responseArray[4].meh)
+    setMiss(Number(responseArray[4].miss))
     setActualPP(responseArray[2]);
     setMods(responseArray[3] ?? "none");
     setAccuracy(responseArray[7]);
@@ -62,32 +82,42 @@ export default function Home() {
     setBeatmapSetID("https://assets.ppy.sh/beatmaps/" + responseArray[10] + "/covers/cover.jpg");
     setBeatmapLink("https://osu.ppy.sh/beatmapsets/" + responseArray[10]);
     setRevealText(true);
+    setOriginalPP(responseArray[2])
+    setRemainderPP(0)
+    setPlus("+/-")
   }
 
   const recalcData = async () => {
-    let response = await fetch(link+"/api/get_pp" +
+    let response = await fetch(linkdev+"/api/get_pp" +
       "?bID=" + bID +
-      "&misscount=" + misscount +
+      "&misscount=" + miss +
       "&accuracy=" + accuracy +
       "&mods=" + mods +
       "&great=" + great +
-      "&ok=" + oK +
-      "&meh=" + meh +
+      "&ok=" + hundred +
+      "&meh=" + fifty +
       "&total=" + total +
       "&maxcombo=" + maxCombo);
     response = await response.json();
     let responseArray: any[] = [];
     Object.values(response).map(x => { responseArray.push(x) })
+    let remainder = Math.floor(responseArray[0] - originalPP);
+    //this is fucking terrible
+    if (remainder < 0) setPlus("-");
+    if (remainder > 0) setPlus("+");
+    if (remainder == 0) setPlus("+/-");
+    remainder = Math.abs(remainder)
     setActualPP(responseArray[0]);
     setAccuracy(responseArray[2]);
-    setMisscount(Number(responseArray[1]));
+    setMiss(Number(responseArray[1]));
+    setRemainderPP(remainder)
     console.log(response);
   }
 
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-4 pb-10 gap-8 sm:p-10 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-4 row-start-2 items-center">
-        <p>hey man this is a calculator for csr pp<br />some recent scores might not work sorry</p>
+        <p>hey man this is a calculator for csr pp<br />waiting for max to update rosu pp values<br />this will show old values for now</p>
         <input type="text"
           value={scoreID}
           size={15}
@@ -105,12 +135,18 @@ export default function Home() {
 
         {revealText ? <div className="flex flex-col items-center">
           <p>{beatmap}</p>
-          <p>[{difficulty}]</p>
-          <p>accuracy: {accuracy}%, misscount: {misscount}, combo: {maxCombo}/{maximumCombo}x</p>
-          <p>stats: {actualPP}/{maxPP}PP</p>
-          <p>mods: {mods}</p>
+          <p>[{difficulty}] +{mods}</p>
+          <p>accuracy: {accuracy}%, combo: {maxCombo}/{maximumCombo}x</p>
+          <p className="preserve-white-space">stats: {oK} | {meh} | {misscount}  •  {originalPP}/{maxPP}pp</p>
+          <p className="preserve-white-space">new stats: {hundred} | {fifty} | {miss}  •  {actualPP}pp  •  {plus}{remainderPP}pp</p>
           <Box sx={{ width: 300 }}>
-            <Slider value={misscount} onChange={(e: any) => setMisscount(e.target.value)} aria-label="secondary" valueLabelDisplay="auto" color="secondary" max={maxmisscount} />
+            <Slider value={hundred} onChange={(e: any) => setHundred(e.target.value)} aria-label="secondary" valueLabelDisplay="auto" color="success" max={maxhundred} />
+          </Box>
+          <Box sx={{ width: 300 }}>
+            <Slider value={fifty} onChange={(e: any) => setFifty(e.target.value)} aria-label="secondary" valueLabelDisplay="auto" color="primary" max={maxFifty} />
+          </Box>
+          <Box sx={{ width: 300 }}>
+            <Slider value={miss} onChange={(e: any) => setMiss(e.target.value)} aria-label="secondary" valueLabelDisplay="auto" color="error" max={maxmisscount} />
           </Box>
           <p><a href={beatmaplink} title="to beatmapset page">
             <img src={beatmapsetID} alt={"to beatmap (no bg loaded)"}></img></a></p>

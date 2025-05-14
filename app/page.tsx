@@ -45,7 +45,7 @@ export default function Home() {
   }
   
   const submitScore = async () => {
-    let response = await fetch(linkdev+"/api/get_score_with_id?scoreID=" + scoreID);
+    let response = await fetch(link+"/api/get_score_with_id?scoreID=" + scoreID);
 
     response = await response.json();
     console.log(response);
@@ -88,7 +88,7 @@ export default function Home() {
   }
 
   const recalcData = async () => {
-    let response = await fetch(linkdev+"/api/get_pp" +
+    let response = await fetch(link+"/api/get_pp" +
       "?bID=" + bID +
       "&misscount=" + miss +
       "&accuracy=" + accuracy +

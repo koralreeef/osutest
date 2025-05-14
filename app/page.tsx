@@ -45,7 +45,7 @@ export default function Home() {
   }
   
   const submitScore = async () => {
-    let response = await fetch(link+"/api/get_score_with_id?scoreID=" + scoreID);
+    let response = await fetch(linkdev+"/api/get_score_with_id?scoreID=" + scoreID);
 
     response = await response.json();
     console.log(response);
@@ -88,7 +88,7 @@ export default function Home() {
   }
 
   const recalcData = async () => {
-    let response = await fetch(link+"/api/get_pp" +
+    let response = await fetch(linkdev+"/api/get_pp" +
       "?bID=" + bID +
       "&misscount=" + miss +
       "&accuracy=" + accuracy +
@@ -117,7 +117,7 @@ export default function Home() {
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-4 pb-10 gap-8 sm:p-10 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-4 row-start-2 items-center">
-        <p>hey man this is a calculator for csr pp<br />waiting for max to update rosu pp values<br />this will show old values for now</p>
+        <p>hey man this is a calculator for csr pp<br />thank you max for the pp calc js library</p>
         <input type="text"
           value={scoreID}
           size={15}

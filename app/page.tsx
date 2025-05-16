@@ -117,7 +117,7 @@ export default function Home() {
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-4 pb-10 gap-8 sm:p-10 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-4 row-start-2 items-center">
-        <p>hey man this is a calculator for csr pp<br />thank you max for the pp calc js library<br />thank you cyperdark for the extended api library</p>
+        <p>hey man this is a calculator for csr pp (stable only)<br />thank you max for the pp calc js library<br />thank you cyperdark for the extended api library<br />example scoreID: 4208415432</p>
         <input type="text"
           value={scoreID}
           size={15}
